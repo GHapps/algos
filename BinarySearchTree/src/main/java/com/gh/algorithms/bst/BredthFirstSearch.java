@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -28,6 +29,7 @@ public class BredthFirstSearch<T> {
         bfsQeueue.add(currentGraph.getNodeByLabel(startLbl));
     }
 
+
     public void bfs(){
 
         //Node<T> startNode = currentGraph.getNodeByLabel(startPointLbl);
@@ -44,6 +46,7 @@ public class BredthFirstSearch<T> {
 
                     if(x.getKey().getState().equals(States.UNDISCOVERED)){
                         x.getKey().setState(States.DISCOVERED);
+                        x.getKey().setParent(treeNode);
                         bfsQeueue.add(x.getKey());
                     }
                 } );
@@ -51,6 +54,42 @@ public class BredthFirstSearch<T> {
             processVertxLate(treeNode);
         }
         //startNode.getNeighbours().entrySet().stream().forEach( x -> x.set);
+    }
+
+    public void dfs(Node<T> startNode){
+
+        int time = 1;
+        startNode.setState(States.DISCOVERED);
+        startNode.setEntryTime(time);
+
+        startNode.getNeighbours().entrySet().stream().forEach(x -> {
+            if(x.getKey().getState().equals(States.DISCOVERED) ){
+                x.getKey().setParent(x.getKey());
+                processEdge(startNode, x.getKey(), 1);
+                dfs(x.getKey());
+            }
+            else if(!x.getKey().equals(States.PROCESSED) || currentGraph.isDirected()){
+                processEdge(startNode, x.getKey(), 1);
+            }
+
+        });
+        processVertxLate(startNode);
+        time++;
+        startNode.setExitTime(time);
+        startNode.setState(States.PROCESSED);
+    }
+
+    public void findShortestPath(Node<T> start, Node<T> end){
+        if (start == end || end == null )
+        {
+            logger.info("{}", start.getLabel());
+        }
+        else
+        {
+            findShortestPath(start, end.getParent());
+            logger.info("{}", end.getLabel());
+        }
+
     }
 
     private void processEdge(Node<T> nx, Node<T> ny, Integer cost){

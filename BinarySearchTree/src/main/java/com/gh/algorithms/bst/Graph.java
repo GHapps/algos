@@ -15,6 +15,8 @@ public class Graph<T> {
 
     private static final Logger logger = LogManager.getLogger(Graph.class);
 
+    private boolean isDirected = false;
+
     private final List<Node<T>> nodeList = new ArrayList<Node<T>>();
 
     public void addNode(Node<T> node){
@@ -30,6 +32,7 @@ public class Graph<T> {
     }
 
     public void addDirectedEdge(Node from, Node to, Integer cost){
+        isDirected = true;
         from.setNeighbour(to, cost);
     }
 
@@ -46,7 +49,7 @@ public class Graph<T> {
     }
 
 
-
-
-
+    public boolean isDirected() {
+        return isDirected;
+    }
 }

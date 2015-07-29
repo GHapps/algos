@@ -55,6 +55,10 @@ public class Program {
         BredthFirstSearch<String> bfs = new BredthFirstSearch<String>(graph, "privacy.html");
 
         bfs.bfs();
+        log.info("Finding the shortest path throught he graph from start!");
+        bfs.findShortestPath(indexNode, contactNode);
+        log.info("Finding depth first search!");
+        bfs.dfs(indexNode);
 
     }
 

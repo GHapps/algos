@@ -14,6 +14,9 @@ public class Node<T> {
     private final Map<Node<T>, Integer> neighbours = new HashMap<Node<T>, Integer>();
     private final String label;
     private States state = States.UNDISCOVERED;
+    private Node<T> parent;
+    private int entryTime;
+    private int exitTime;
 
 //    public Node(){
 //
@@ -22,7 +25,10 @@ public class Node<T> {
     public Node(T nodeData, String nodeLabel){
         data = nodeData;
         label = nodeLabel;
+
     }
+
+
 
 
     public Map<Node<T>, Integer> getNeighbours(){
@@ -47,5 +53,29 @@ public class Node<T> {
 
     public States getState() {
         return state;
+    }
+
+    public Node<T> getParent() {
+        return parent;
+    }
+
+    public void setParent(Node<T> parent) {
+        this.parent = parent;
+    }
+
+    public int getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(int entryTime) {
+        this.entryTime = entryTime;
+    }
+
+    public int getExitTime() {
+        return exitTime;
+    }
+
+    public void setExitTime(int exitTime) {
+        this.exitTime = exitTime;
     }
 }
